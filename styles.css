@@ -1,0 +1,61 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.game-container {
+    margin-top: 2%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5rem;
+}
+
+.selection-button-container {
+    display: flex;
+    gap: 5rem;
+    flex-direction: row;
+}
+
+.selection-button{
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    font-size: 42px;
+}
+
+.game-container h1 {
+    font-size: 72px;
+}
+
+.game-container h4 {
+    font-size: 42px;
+}
+
+.display-list{
+    margin-top: 2%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5rem;
+}
+
+.display-list h2{
+    font-size: 42px;
+}
+
+.display-list h3{
+    font-size: 36px;
+}
+
+.display-list h4{
+    font-size: 32px;
+}
+
+.new-game-button{
+    font-size: 32px;
+    padding: 5px;
+}
