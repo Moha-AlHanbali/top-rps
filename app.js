@@ -11,6 +11,8 @@ const resultHeader = document.createElement('h4');
 const scoreHeader = document.createElement('h3');
 const announcementHeader = document.createElement('h2');
 
+displayDiv.classList.add('display-list');
+
 document.body.appendChild(displayDiv);
 displayDiv.appendChild(infoHeader);
 displayDiv.appendChild(resultHeader);
@@ -29,7 +31,7 @@ const getComputerChoice = () => choices[Math.floor(Math.random() * choices.lengt
 
 const promptNewGame = () => {
     const newGameButton = document.createElement('button');
-    newGameButton.classList.add('restart-game')
+    newGameButton.classList.add('new-game-button')
     newGameButton.textContent = 'New Game'
     newGameButton.addEventListener('click', (e) => {
         playerScore = 0;
@@ -69,7 +71,7 @@ const playRound = (playerSelection) => {
         resultHeader.textContent = "This round is a tie!";
     }
 
-    scoreHeader.textContent = `The score is Player: ${playerScore} - Computer: ${computerScore}`;
+    scoreHeader.textContent = `Player: ${playerScore} - Computer: ${computerScore}`;
 
     if (playerScore === 5) {
         announcementHeader.textContent = "you win this game.";
@@ -78,7 +80,7 @@ const playRound = (playerSelection) => {
         return
     }
     if (computerScore === 5) {
-        announcementHeader.textContent = "The computer wins this game.";
+        announcementHeader.textContent = "The computer wins this game";
         gameStatus = false;
         promptNewGame()
         return
