@@ -1,59 +1,87 @@
 let playerScore = 0;
 let computerScore = 0;
+let gameStatus = true;
+const choices = ["rock", "paper", "scissors"];
 
-const choices = ["rock", "paper", "scissor"];
+const selectionButtons = document.getElementsByClassName("selection-button");
 
-const promptUser = () => prompt("Enter your choice (rock, paper, scissor):").trim().toLowerCase();
+const displayDiv = document.createElement('div');
+const infoHeader = document.createElement('h4');
+const resultHeader = document.createElement('h4');
+const scoreHeader = document.createElement('h3');
+const announcementHeader = document.createElement('h2');
+
+document.body.appendChild(displayDiv);
+displayDiv.appendChild(infoHeader);
+displayDiv.appendChild(resultHeader);
+displayDiv.appendChild(scoreHeader);
+displayDiv.appendChild(announcementHeader);
+
+
+Array.from(selectionButtons).forEach(btn => {
+    btn.addEventListener('click', (e) => { playRound(e.target.value) })
+});
+
+
+const promptUser = () => prompt("Enter your choice (rock, paper, scissors):").trim().toLowerCase();
 
 const getComputerChoice = () => choices[Math.floor(Math.random() * choices.length)];
 
-const playerSelection = () => {
-    let userInput = promptUser();
-
-    if (choices.includes(userInput)) return userInput;
-
-    while (!choices.includes(userInput)) {
-        console.log("Invalid input.");
-        userInput = promptUser();
-    }
-    return userInput;
+const promptNewGame = () => {
+    const newGameButton = document.createElement('button');
+    newGameButton.classList.add('restart-game')
+    newGameButton.textContent = 'New Game'
+    newGameButton.addEventListener('click', (e) => {
+        playerScore = 0;
+        computerScore = 0;
+        infoHeader.textContent = "";
+        resultHeader.textContent = "";
+        scoreHeader.textContent = "";
+        announcementHeader.textContent = "";
+        gameStatus = true;
+        newGameButton.remove();
+    })
+    displayDiv.appendChild(newGameButton);
 }
+const playRound = (playerSelection) => {
 
-const playRound = () => {
-    const playerChoice = playerSelection();
+    if (!gameStatus) return
+
     const computerSelection = getComputerChoice();
 
-    console.log(`You played ${playerChoice}, the computer played ${computerSelection}!`);
+    infoHeader.textContent = `You played ${playerSelection}, the computer played ${computerSelection}!`;
 
     if (
-        (playerChoice === "rock" && computerSelection === "scissor") ||
-        (playerChoice === "paper" && computerSelection === "rock") ||
-        (playerChoice === "scissor" && computerSelection === "paper")
+        (playerSelection === "rock" && computerSelection === "scissors") ||
+        (playerSelection === "paper" && computerSelection === "rock") ||
+        (playerSelection === "scissors" && computerSelection === "paper")
     ) {
         playerScore++;
-        console.log("You win this round!");
+        resultHeader.textContent = "You win this round!";
     } else if (
-        (computerSelection === "rock" && playerChoice === "scissor") ||
-        (computerSelection === "paper" && playerChoice === "rock") ||
-        (computerSelection === "scissor" && playerChoice === "paper")
+        (computerSelection === "rock" && playerSelection === "scissors") ||
+        (computerSelection === "paper" && playerSelection === "rock") ||
+        (computerSelection === "scissors" && playerSelection === "paper")
     ) {
         computerScore++;
-        console.log("The computer wins this round!");
+        resultHeader.textContent = "The computer wins this round!";
     } else {
-        console.log("This round is a tie!");
+        resultHeader.textContent = "This round is a tie!";
     }
 
-    console.log(`The score is Player: ${playerScore} - Computer: ${computerScore}`);
+    scoreHeader.textContent = `The score is Player: ${playerScore} - Computer: ${computerScore}`;
 
-    if (playerScore === 10) {
-        console.log("you win this game.");
+    if (playerScore === 5) {
+        announcementHeader.textContent = "you win this game.";
+        gameStatus = false;
+        promptNewGame()
         return
     }
-    if (computerScore === 10) {
-        console.log("The computer wins this game.");
+    if (computerScore === 5) {
+        announcementHeader.textContent = "The computer wins this game.";
+        gameStatus = false;
+        promptNewGame()
         return
     }
-    playRound();
 };
 
-playRound();
